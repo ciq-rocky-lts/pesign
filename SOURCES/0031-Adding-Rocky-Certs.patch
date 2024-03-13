@@ -1,0 +1,41 @@
+From 24f32fe884b078740e66af230e8101c66a925dbb Mon Sep 17 00:00:00 2001
+From: Sherif Nagy <sherif@rockylinux.org>
+Date: Wed, 26 May 2021 13:50:13 -0400
+Subject: [PATCH] Adding Rocky Certs
+
+---
+ src/macros.pesign | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/src/macros.pesign b/src/macros.pesign
+index dfdac02..50170e1 100644
+--- a/src/macros.pesign
++++ b/src/macros.pesign
+@@ -7,10 +7,10 @@
+ # And magically get the right thing.
+ 
+ %__pesign_token %{nil}%{?pe_signing_token:-t "%{pe_signing_token}"}
+-%__pesign_cert %{!?pe_signing_cert:"Red Hat Test Certificate"}%{?pe_signing_cert:"%{pe_signing_cert}"}
++%__pesign_cert %{!?pe_signing_cert:"Rocky Linux Secure Boot Signing Local Test Cert - Rocky Enterprise Software Foundation"}%{?pe_signing_cert:"%{pe_signing_cert}"}
+ 
+-%__pesign_client_token %{!?pe_signing_token:"Fedora Signer (OpenSC Card)"}%{?pe_signing_token:"%{pe_signing_token}}
+-%__pesign_client_cert %{!?pe_signing_cert:"/CN=Fedora Secure Boot Signer"}%{?pe_signing_cert:"%{pe_signing_cert}}
++%__pesign_client_token %{!?pe_signing_token:"Rocky Linux Boot Signing Cert"}%{?pe_signing_token:"%{pe_signing_token}"}
++%__pesign_client_cert %{!?pe_signing_cert:"Certificate for Digital Signature"}%{?pe_signing_cert:"%{pe_signing_cert}"}
+ 
+ %_pesign /usr/bin/pesign
+ %_pesign_client /usr/bin/pesign-client
+@@ -25,8 +25,8 @@
+ # -s 					# perform signing
+ %pesign(i:o:C:e:c:n:a:s)						\
+   _pesign_nssdir=/etc/pki/pesign					\
+-  if [ %{__pesign_cert} = "Red Hat Test Certificate" ]; then		\
+-    _pesign_nssdir=/etc/pki/pesign-rh-test				\
++  if [ %{__pesign_cert} = "Rocky Linux Secure Boot Signing Local Test Cert - Rocky Enterprise Software Foundation" ]; then		\
++    _pesign_nssdir=/etc/pki/pesign-r-test				\
+   fi									\
+   if [ -x %{_pesign} ] &&  						\\\
+        [ "%{_target_cpu}" == "x86_64" -o 				\\\
+-- 
+2.27.0
+
